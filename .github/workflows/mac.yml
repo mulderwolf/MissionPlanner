@@ -67,6 +67,7 @@ jobs:
         shell: pwsh
         continue-on-error: true
         run: |
+          python3 -m pip install packaging setuptools
           npm install --global create-dmg
           cd ExtLibs/Xamarin/Xamarin.MacOS/bin/Release/
           create-dmg 'Mission Planner.app' --dmg-title='Mission Planner'
