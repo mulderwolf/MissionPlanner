@@ -2757,18 +2757,33 @@ namespace MissionPlanner.GCSViews
 
         private void doUpdateLocationMenuItem_Click(object sender, EventArgs e)
         {
-            string alt = "100";
-            alt = (100 * CurrentState.multiplieralt).ToString("0");
-            int intalt = (int)(100 * CurrentState.multiplieralt);
-            MainV2.comPort.MAV.GuidedMode.z = intalt / CurrentState.multiplieralt;
-            if (MainV2.comPort.MAV.cs.mode == "Guided")
+            if (MainV2.comPort.BaseStream.IsOpen)
             {
-                MainV2.comPort.setGuidedModeWP(new Locationwp
+                try
                 {
-                    alt = MainV2.comPort.MAV.GuidedMode.z,
-                    lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
-                    lng = MainV2.comPort.MAV.GuidedMode.y / 1e7
-                });
+                    var alt = srtm.getAltitude(MouseDownStart.Lat, MouseDownStart.Lng);
+                    if (CustomMessageBox.Show(
+                            "This will move your vehicle. Are you Sure?",
+                            "Are you sure?", CustomMessageBox.MessageBoxButtons.OKCancel) ==
+                        CustomMessageBox.DialogResult.OK)
+                    {
+                        MainV2.comPort.doCommandInt(
+                            (byte)MainV2.comPort.sysidcurrent,
+                            (byte)MainV2.comPort.compidcurrent,
+                            MAVLink.MAV_CMD.DO_SET_HOME, 
+                            0, 
+                            0, 
+                            0, 
+                            0, 
+                            (int)(MouseDownStart.Lat * 1e7),
+                            (int)(MouseDownStart.Lng * 1e7), 
+                            (float)(alt.alt));
+                    }
+                }
+                catch
+                {
+                    CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
+                }
             }
         }
 
