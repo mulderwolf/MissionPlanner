@@ -184,6 +184,7 @@ namespace MissionPlanner.GCSViews
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.zg1 = new ZedGraph.ZedGraphControl();
             this.contextMenuStripMap = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.doUpdateLocationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flyToHereAltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flyToCoordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -2381,6 +2382,7 @@ namespace MissionPlanner.GCSViews
             // contextMenuStripMap
             // 
             this.contextMenuStripMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.doUpdateLocationMenuItem,
             this.goHereToolStripMenuItem,
             this.flyToHereAltToolStripMenuItem,
             this.flyToCoordsToolStripMenuItem,
@@ -2395,6 +2397,12 @@ namespace MissionPlanner.GCSViews
             this.jumpToTagToolStripMenuItem});
             this.contextMenuStripMap.Name = "contextMenuStrip1";
             resources.ApplyResources(this.contextMenuStripMap, "contextMenuStripMap");
+            // 
+            // doUpdateLocationMenuItem
+            // 
+            this.doUpdateLocationMenuItem.Name = "doUpdateLocationMenuItem";
+            resources.ApplyResources(this.doUpdateLocationMenuItem, "doUpdateLocationMenuItem");
+            this.doUpdateLocationMenuItem.Click += new System.EventHandler(this.doUpdateLocationMenuItem_Click);
             // 
             // goHereToolStripMenuItem
             // 
@@ -2824,6 +2832,8 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.SplitContainer MainH;
         private System.Windows.Forms.SplitContainer SubMainLeft;
         private System.Windows.Forms.ToolStripMenuItem goHereToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doUpdateLocationMenuItem;
+
         private Controls.HUD hud1;
         private Controls.MyButton BUT_clear_track;
         private System.Windows.Forms.CheckBox CB_tuning;

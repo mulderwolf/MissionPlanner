@@ -2755,6 +2755,23 @@ namespace MissionPlanner.GCSViews
             }
         }
 
+        private void doUpdateLocationMenuItem_Click(object sender, EventArgs e)
+        {
+            string alt = "100";
+            alt = (100 * CurrentState.multiplieralt).ToString("0");
+            int intalt = (int)(100 * CurrentState.multiplieralt);
+            MainV2.comPort.MAV.GuidedMode.z = intalt / CurrentState.multiplieralt;
+            if (MainV2.comPort.MAV.cs.mode == "Guided")
+            {
+                MainV2.comPort.setGuidedModeWP(new Locationwp
+                {
+                    alt = MainV2.comPort.MAV.GuidedMode.z,
+                    lat = MainV2.comPort.MAV.GuidedMode.x / 1e7,
+                    lng = MainV2.comPort.MAV.GuidedMode.y / 1e7
+                });
+            }
+        }
+
         private void flyToHereAltToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string alt = "100";
