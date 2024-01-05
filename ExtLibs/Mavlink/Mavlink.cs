@@ -1314,8 +1314,11 @@ public partial class MAVLink
         ///<summary> Provide an external position estimate for use when dead-reckoning. This is meant to be used for occasional position resets that may be provided by a external system such as a remote pilot using landmarks over a video link. |Timestamp that this message was sent as a time in the transmitters time domain. The sender should wrap this time back to zero based on required timing accuracy for the application and the limitations of a 32 bit float. For example, wrapping at 10 hours would give approximately 1ms accuracy. Recipient must handle time wrap in any timing jitter correction applied to this field. Wrap rollover time should not be at not more than 250 seconds, which would give approximately 10 microsecond accuracy.| The time spent in processing the sensor data that is the basis for this position. The recipient can use this to improve time alignment of the data. Set to zero if not known.| estimated one standard deviation accuracy of the measurement. Set to NaN if not known.| Empty| Latitude| Longitude| Altitude, not used. Should be sent as NaN. May be supported in a future version of this message.|  </summary>
         [Description("Provide an external position estimate for use when dead-reckoning. This is meant to be used for occasional position resets that may be provided by a external system such as a remote pilot using landmarks over a video link.")]
         [hasLocation()]
-        EXTERNAL_POSITION_ESTIMATE=43003, 
-        
+        EXTERNAL_POSITION_ESTIMATE=43003,
+        ///<summary> Changes current location to a specified location. |0 = use specified location| Empty| Empty| Empty| Latitude| Longitude| Altitude|  </summary>
+        [Description("Changes current location to a specified location.")]
+        [hasLocation()]
+        DO_UPDATE_LOCATION = 60001,
     };
     
     ///<summary>  </summary>

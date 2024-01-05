@@ -2764,13 +2764,13 @@ namespace MissionPlanner.GCSViews
                     var alt = srtm.getAltitude(MouseDownStart.Lat, MouseDownStart.Lng);
                     if (CustomMessageBox.Show(
                             "This will move your vehicle. Are you Sure?",
-                            "Are you sure?", CustomMessageBox.MessageBoxButtons.OKCancel) ==
+                            "Confirmation Requered", CustomMessageBox.MessageBoxButtons.OKCancel) ==
                         CustomMessageBox.DialogResult.OK)
                     {
                         MainV2.comPort.doCommandInt(
                             (byte)MainV2.comPort.sysidcurrent,
                             (byte)MainV2.comPort.compidcurrent,
-                            MAVLink.MAV_CMD.DO_SET_HOME, 
+                            MAVLink.MAV_CMD.DO_UPDATE_LOCATION, 
                             0, 
                             0, 
                             0, 
