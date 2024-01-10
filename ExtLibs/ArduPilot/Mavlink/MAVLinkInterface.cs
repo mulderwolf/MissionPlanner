@@ -3860,6 +3860,31 @@ Mission Planner waits for 2 valid heartbeat packets before connecting");
         }
 
         [Obsolete]
+        public void sendHILGPS(byte sysid, byte compid, int latitude,int longitude, int altitude)
+        {
+            mavlink_hil_gps_t data = new mavlink_hil_gps_t();
+            data.time_usec = (UInt64)DateTime.Now.Ticks;
+            data.lat = latitude;  // * 1E7
+            data.lon = longitude; // * 1E7
+            data.alt = altitude;  // mm
+            data.eph = 65535;
+            data.epv = 65535;
+            data.vel = 65535;
+            data.vn = 0;
+            data.ve = 0;
+            data.vd = 0;
+            data.vn = 0;
+            data.cog = 65535;
+            data.fix_type = 5;
+            data.id = 1;
+            data.yaw = 1;
+            data.satellites_visible = 10;
+
+            generatePacket((byte)MAVLINK_MSG_ID.HIL_GPS, data);
+        }
+
+
+        [Obsolete]
         public MAV_MISSION_RESULT setWP(Locationwp loc, ushort index, MAV_FRAME frame, byte current = 0,
             byte autocontinue = 1, bool use_int = false, MAV_MISSION_TYPE mission_type = MAV_MISSION_TYPE.MISSION)
         {

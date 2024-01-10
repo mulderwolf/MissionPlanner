@@ -2762,23 +2762,16 @@ namespace MissionPlanner.GCSViews
                 CustomMessageBox.Show("Please Connect First");
                 return;
             }
-            var alt = srtm.getAltitude(MouseDownStart.Lat, MouseDownStart.Lng);
             if (CustomMessageBox.Show(
                     "This will move your vehicle. Are you Sure?",
                     "Confirmation Requered", CustomMessageBox.MessageBoxButtons.OKCancel) ==
                 CustomMessageBox.DialogResult.OK)
             {
-                MainV2.comPort.doCommandInt(
-                    (byte)MainV2.comPort.sysidcurrent,
+                MainV2.comPort.sendHILGPS((byte)MainV2.comPort.sysidcurrent,
                     (byte)MainV2.comPort.compidcurrent,
-                    MAVLink.MAV_CMD.DO_UPDATE_LOCATION, 
-                    0, 
-                    0, 
-                    0, 
-                    0, 
                     (int)(MouseDownStart.Lat * 1e7),
-                    (int)(MouseDownStart.Lng * 1e7), 
-                    (float)(alt.alt));
+                    (int)(MouseDownStart.Lng * 1e7),
+                    (int)(MainV2.comPort.MAV.cs.alt*1000));
             }
         }
 
