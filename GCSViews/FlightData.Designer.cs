@@ -185,6 +185,7 @@ namespace MissionPlanner.GCSViews
             this.zg1 = new ZedGraph.ZedGraphControl();
             this.contextMenuStripMap = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.doUpdateLocationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+	    this.doSetTargetMarkMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.goHereToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flyToHereAltToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flyToCoordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -2383,6 +2384,7 @@ namespace MissionPlanner.GCSViews
             // 
             this.contextMenuStripMap.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.doUpdateLocationMenuItem,
+            this.doSetTargetMarkMenuItem,
             this.goHereToolStripMenuItem,
             this.flyToHereAltToolStripMenuItem,
             this.flyToCoordsToolStripMenuItem,
@@ -2403,6 +2405,12 @@ namespace MissionPlanner.GCSViews
             this.doUpdateLocationMenuItem.Name = "doUpdateLocationMenuItem";
             resources.ApplyResources(this.doUpdateLocationMenuItem, "doUpdateLocationMenuItem");
             this.doUpdateLocationMenuItem.Click += new System.EventHandler(this.doUpdateLocationMenuItem_Click);
+            // 
+            // doSetTargetMarkMenuItem
+            // 
+            this.doSetTargetMarkMenuItem.Name = "doSetTargetMarkMenuItem";
+            resources.ApplyResources(this.doSetTargetMarkMenuItem, "doSetTargetMarkMenuItem");
+            this.doSetTargetMarkMenuItem.Click += new System.EventHandler(this.doSetTargetMarkMenuItem_Click);
             // 
             // goHereToolStripMenuItem
             // 
@@ -2833,6 +2841,7 @@ namespace MissionPlanner.GCSViews
         private System.Windows.Forms.SplitContainer SubMainLeft;
         private System.Windows.Forms.ToolStripMenuItem goHereToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem doUpdateLocationMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doSetTargetMarkMenuItem;
 
         private Controls.HUD hud1;
         private Controls.MyButton BUT_clear_track;

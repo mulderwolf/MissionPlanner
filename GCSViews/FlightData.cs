@@ -32,6 +32,7 @@ using ZedGraph;
 using LogAnalyzer = MissionPlanner.Utilities.LogAnalyzer;
 using TableLayoutPanelCellPosition = System.Windows.Forms.TableLayoutPanelCellPosition;
 using UnauthorizedAccessException = System.UnauthorizedAccessException;
+using static IronPython.Modules._ast;
 
 // written by michael oborne
 
@@ -4309,6 +4310,28 @@ namespace MissionPlanner.GCSViews
             else
             {
                 CustomMessageBox.Show(Strings.InvalidField, Strings.ERROR);
+            }
+        }
+
+        private void doSetTargetMarkMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!MainV2.comPort.BaseStream.IsOpen)
+            {
+                CustomMessageBox.Show("Please Connect First");
+                return;
+            }
+
+            try
+            {
+                POI.TGTAdd(MouseDownStart);
+                MainV2.comPort.doCommandInt((byte)MainV2.comPort.sysidcurrent, (byte)MainV2.comPort.compidcurrent,
+                    MAVLink.MAV_CMD.DO_SET_ROI, 0, 0, 0, 0, (int)(MouseDownStart.Lat * 1e7),
+                    (int)(MouseDownStart.Lng * 1e7), ((intalt / CurrentState.multiplieralt)),
+                    frame: MAVLink.MAV_FRAME.GLOBAL_RELATIVE_ALT);
+            }
+            catch
+            {
+                CustomMessageBox.Show(Strings.CommandFailed, Strings.ERROR);
             }
         }
 

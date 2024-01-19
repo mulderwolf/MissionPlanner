@@ -69,6 +69,32 @@ namespace MissionPlanner.Utilities
                 _POIModified(null, null);
         }
 
+        public static void TGTAdd(PointLatLngAlt Point)
+        {
+            if (Point == null)
+                return;
+
+            PointLatLngAlt pnt = Point;
+
+            pnt.Tag = "BAMBIT TUT" + "\n" + pnt.ToString();
+            pnt.color = System.Drawing.Color.Black;
+
+            for (int a = 0; a < POI.POIs.Count; a++)
+            {
+                if (POI.POIs[a].color == pnt.color)
+                {
+                    POI.POIs.RemoveAt(a);
+                    if (_POIModified != null)
+                        _POIModified(null, null);
+                }
+            }
+
+            POI.POIs.Add(pnt);
+
+            if (_POIModified != null && !loading)
+                _POIModified(null, null);
+        }
+
         public static void POIAdd(PointLatLngAlt Point)
         {
             if (Point == null)
