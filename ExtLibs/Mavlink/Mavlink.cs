@@ -2243,8 +2243,13 @@ public partial class MAVLink
         QACRO=23, 
         ///<summary>  | </summary>
         [Description("")]
-        THERMAL=24, 
-        
+        THERMAL=24,
+        ///<summary>  | </summary>
+        [Description("")]
+        COMBAT = 26,
+        ///<summary>  | </summary>
+        [Description("")]
+        MAKEOFF = 27,
     };
     
     ///<summary> A mapping of copter flight modes for custom_mode field of heartbeat. </summary>

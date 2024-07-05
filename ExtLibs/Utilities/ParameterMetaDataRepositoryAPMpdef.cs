@@ -10,6 +10,7 @@ using System.IO.Compression;
 using System.Threading.Tasks;
 using log4net;
 using SharpCompress.Compressors.Xz;
+using System.Reflection;
 
 namespace MissionPlanner.Utilities
 {
@@ -26,7 +27,7 @@ namespace MissionPlanner.Utilities
             "ArduPlane", "AntennaTracker", "Blimp", "Heli"
         };
 
-        static string url = "https://autotest.ardupilot.org/Parameters/{0}/apm.pdef.xml.gz";
+        static string url = "https://aautotest.ardupilot.org/Parameters/{0}/apm.pdef.xml.gz";
 
         static ParameterMetaDataRepositoryAPMpdef()
         {
@@ -55,8 +56,32 @@ namespace MissionPlanner.Utilities
                     if(File.Exists(file))
                         if (new FileInfo(file).LastWriteTime.AddDays(7) > DateTime.Now && !force)
                             return;
-                    var dltask = Download.getFilefromNetAsync(newurl, file);
-                    tlist.Add(dltask);
+                    string folder=Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)+Path.DirectorySeparatorChar+"apm";
+                    var file_gz = Path.Combine(folder, a + ".apm.pdef.xml.gz");
+                    var fileouttemp = Path.Combine(Path.GetTempFileName());
+                    var fileout = Path.Combine(Settings.GetDataDirectory(), a + ".apm.pdef.xml");
+
+                    if (File.Exists(file_gz))
+                        using (var read = File.OpenRead(file_gz))
+                        {
+                            //if (XZStream.IsXZStream(read))
+                            {
+                                read.Position = 0;
+                                var stream = new GZipStream(read, CompressionMode.Decompress);
+                                //var stream = new XZStream(read);
+                                using (var outst = File.Open(fileouttemp, FileMode.Create))
+                                {
+                                    stream.CopyTo(outst);
+                                }
+                                // move after good decompress
+                                File.Delete(fileout);
+                                File.Move(fileouttemp, fileout);
+                            }
+                        }
+
+
+                    //var dltask = Download.getFilefromNetAsync(newurl, file);
+                    //tlist.Add(dltask);
                 }
                 catch (Exception ex) { log.Error(ex); }
             });
